@@ -2,8 +2,6 @@ import 'dart:io';
 import 'package:expenses_app/widgets/chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/semantics.dart';
-import 'package:flutter/services.dart';
 import './models/transaction.dart';
 import './widgets/transition_list.dart';
 import 'package:expenses_app/widgets/new_transaction.dart';
