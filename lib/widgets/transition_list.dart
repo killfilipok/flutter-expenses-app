@@ -28,13 +28,11 @@ class TransitionList extends StatelessWidget {
             ]);
           })
         : ListView.builder(
-            itemBuilder: (ctx, index) {
-              return TransactionItem(
-                transaction: transactions[index],
-                deleteTx: deleteTx
-              );
-            },
             itemCount: transactions.length,
+            itemBuilder: (ctx, index) => TransactionItem(
+                key: ValueKey(transactions[index].id),
+                transaction: transactions[index],
+                deleteTx: deleteTx),
           );
   }
 }

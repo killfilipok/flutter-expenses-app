@@ -7,16 +7,43 @@ import 'dart:io';
 class NewTransaction extends StatefulWidget {
   final Function addTx;
 
-  NewTransaction(this.addTx);
+  NewTransaction(this.addTx) {
+    print('Constructor NewTransaction Widget');
+  }
 
   @override
-  _NewTransactionState createState() => _NewTransactionState();
+  _NewTransactionState createState() {
+    print('CreateState NewTransaction Widget');
+    return _NewTransactionState();
+  }
 }
 
 class _NewTransactionState extends State<NewTransaction> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   DateTime _selectedDate;
+
+  _NewTransactionState() {
+    print('Constructor _NewTransactionState');
+  }
+
+  @override
+  void initState() {
+    print('initState _NewTransactionState');
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(NewTransaction oldWidget) {
+    print('didUpdateWidget _NewTransactionState');
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void dispose() {
+    print('dispose _NewTransactionState');
+    super.dispose();
+  }
 
   void _submitData() {
     if (_titleController.text.isEmpty || _titleController.text.isEmpty) {
@@ -37,16 +64,38 @@ class _NewTransactionState extends State<NewTransaction> {
 
   void _presentDatePicker() {
     if (Platform.isIOS) {
+      double availableHeight = MediaQuery.of(context).size.height;
+      setState(() {
+        _selectedDate = DateTime.now();
+      });
       showModalBottomSheet(
           context: context,
+          backgroundColor: Colors.white,
           builder: (BuildContext builder) {
             return Container(
-              height: MediaQuery.of(context).size.height / 3,
-              child: CupertinoDatePicker(onDateTimeChanged: (pickedDate) {
-                setState(() {
-                  _selectedDate = pickedDate;
-                });
-              }),
+              height: availableHeight * 0.33,
+              child: Column(children: [
+                Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                  CupertinoButton(
+                    child: Text('Done'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  )
+                ]),
+                Container(
+                    height: availableHeight * 0.25,
+                    child: CupertinoDatePicker(
+                      onDateTimeChanged: (pickedDate) {
+                        setState(() {
+                          _selectedDate = pickedDate;
+                        });
+                      },
+                      initialDateTime: DateTime.now(),
+                      maximumDate: DateTime.now(),
+                      minimumDate: DateTime(2019),
+                    )),
+              ]),
             );
           });
     } else {
